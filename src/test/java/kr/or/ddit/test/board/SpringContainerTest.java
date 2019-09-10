@@ -120,7 +120,6 @@ public class SpringContainerTest {
 	@Test
 	public void springBeanScopeTest() {
 		/***Given***/
-		
 
 		/***When***/
 
