@@ -1,6 +1,8 @@
 package kr.or.ddit.test.board;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import javax.annotation.Resource;
 
@@ -13,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.or.ddit.test.board.dao.IBoardDao;
 import kr.or.ddit.test.board.service.BoardService;
+import kr.or.ddit.test.ioc.CollectionBean;
 
 // 스프링 환경을 이용한 junit Test
 // @Test 메소드가 실행되기전에 제공한 조립 설명서를 바탕으로 스프팅 컨테이너 구축
@@ -143,7 +146,48 @@ public class SpringContainerTest {
 		
 	}
 	
+	//---------------------------------------------------------------------------------------------
+	
+	@Resource(name="collectionBean")
+	private CollectionBean collectionBean;
+	
+	/**
+	 * 
+	* Method : collectionBeanTest
+	* 작성자 : 202-01
+	* 변경이력 :
+	* Method 설명 : collection 객체의 동적생성-주입 , 자주 사용하지는 않지만 가끔 동적으로 만들어내는 방법이 있다
+	 */
+	@Test
+	public void collectionBeanTest() {
+		/***Given***/
+		
 
+		/***When***/
+
+		/***Then***/
+		logger.debug("collectionBean.getList() : {} ", collectionBean.getList());
+		logger.debug("collectionBean.getSet() : {} ", collectionBean.getSet());
+		logger.debug("collectionBean.getMap() : {} ", collectionBean.getMap());
+		logger.debug("collectionBean.getProperties() : {} ", collectionBean.getProperties());
+		
+		assertNotNull(collectionBean.getList());
+		assertNotNull(collectionBean.getSet());
+		assertNotNull(collectionBean.getMap());
+		assertNotNull(collectionBean.getProperties());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
