@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
+		
 	<!-- @Controller 어노테이션이 불은 클래스만 스캔 -->
 	<context:component-scan base-package="kr.or.ddit" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -21,7 +21,7 @@
 	
 	<!-- 스프링이 처리하지 못하는 요청에 대해서 was(servlet-container)에 있는 defalut-servlet으로 처리 위임 -->
 	<mvc:default-servlet-handler/>
-	
+	 
 	<!-- view resolver : jsp -internalResourceViewResolver -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"/>		<!-- 접두어 -->

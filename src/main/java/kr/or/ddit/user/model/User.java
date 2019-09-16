@@ -13,21 +13,20 @@ import kr.or.ddit.encrype.kisa.sha256.KISA_SHA256;
 
 // 0906 - implements HttpSessionBindingListener
 public class User implements HttpSessionBindingListener{
-	private String userNm;	//사용자 이름
-	private String pass;	//사용자 비밀번호
-	private String userId;	//사용자 아이디
-	private String alias;  	//별명
+	private String userNm;			//사용자 이름
+	private String pass;			//사용자 비밀번호
+	private String userId;			//사용자 아이디
+	private String alias;  			//별명
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date reg_dt;	//날짜
+	private Date reg_dt;			//날짜
 	
-	private String addr1;	//주소1
-	private String addr2;	//주소2
-	private String zipcode; //우편번호
+	private String addr1;			//주소1
+	private String addr2;			//주소2
+	private String zipcode; 		//우편번호
 	private String filename;		// 파일명(사용자 업로드 파일명)
 	private String realfilename;	// 물리 파일명
 	private String realfilename2;	// 물리 파일명
-	
 	
 	private static final Logger logger = LoggerFactory.getLogger(User.class);
 	
