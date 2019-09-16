@@ -3,44 +3,31 @@ package kr.or.ddit.test.user.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import kr.or.ddit.common.model.Page;
+import kr.or.ddit.config.test.RootTestConfig;
 import kr.or.ddit.test.user.repository.UserDaoTest;
 import kr.or.ddit.user.model.User;
 import kr.or.ddit.user.service.IUserService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:kr/or/ddit/config/spring/context-root.xml",
-								"classpath:kr/or/ddit/config/spring/context-datasource.xml",
-								"classpath:kr/or/ddit/config/spring/context-transaction.xml"})
-public class UserServiceTest {
+public class UserServiceTest extends RootTestConfig{
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
 	
+	private String userId = "KKKTEST";
+	
 	@Resource(name="userService")
 	private IUserService userService;
-	
-	String userId = "KKKTEST";
-	
-	@Before
-	public void setup() {
-		userService.deleteUser(userId);
-	}
 	
 	@Test
 	public void getUserListTest() {
@@ -137,11 +124,9 @@ public class UserServiceTest {
 		user.setUserNm("케이테스트");
 		user.setPass("kTest1234");
 		
-		try {
-			user.setReg_dt(new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-08"));
-		} catch (java.text.ParseException e) {
-			e.printStackTrace();
-		}
+		
+		user.setReg_dt(new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-08"));
+	
 		
 		user.setAlias("곰테스트");
 		user.setAddr1("대전광역시 중구 중앙로 76");
