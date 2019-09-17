@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.common.model.Page;
 import kr.or.ddit.user.service.IUserService;
@@ -91,6 +92,9 @@ public class UserController {
 	 */
 	@RequestMapping(path = "userPagingList", method = RequestMethod.GET)
 	public String userPagingList(Model model, Page page) {				// Model model, int page, int pagesize
+		
+//		public String userPagingList(@RequestParam(defaultValue = "1") int page,
+//									 @RequestParam(defaultValue = "10") int pagesize)  -> 이렇게 사용시 page객체 다시 생성
 		
 //		page = page == 0 ? 1 : page;
 //		pagesize = pagesize == 0 ? 10 : pagesize;
