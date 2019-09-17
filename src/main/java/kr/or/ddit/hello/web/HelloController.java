@@ -22,7 +22,7 @@ public class HelloController {
 		model.addAttribute("nowDt", new Date());
 		model.addAttribute("msg", "hello, World");
 		
-		// parameter도 넘길 수 있다.
+		// parameter도 넘길 수 있다. HttpServletRequest request 선언하고
 		model.addAttribute("userId", request.getParameter("userId") + "_helloController");
 		
 		return "hello/hello";		//   /WEB-INF/views/hello/hello.jsp
