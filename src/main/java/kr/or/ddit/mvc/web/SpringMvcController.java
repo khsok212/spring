@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +24,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.ddit.exception.NoFileException;
 import kr.or.ddit.mvc.model.Main;
 import kr.or.ddit.user.model.User;
+import kr.or.ddit.user.model.UserVaildator;
 import kr.or.ddit.util.FileUtil;
 import kr.or.ddit.util.model.FileInfo;
 
@@ -176,11 +182,67 @@ public class SpringMvcController {
 		// forward : "forward : url주소";		다른 컨트롤러로 forward
 	}
 	
+	@RequestMapping("validator")
+	public String validator(User user, BindingResult result) {
+		// form객체(command, vo)의 검증 결과를 담는 bindingResult 객체는
+		// 반드시 메소드 인자 순서에서 form 객체 바로 뒤에 위치해야 한다
+		
+		new UserVaildator().validate(user, result);
+		if(result.hasErrors())
+			logger.debug("hasErrors()");
+		else 
+			logger.debug("no error");
+		
+		logger.debug("user : {}", user);
+		return "mvc/view";
+	}
 	
 	
+	@RequestMapping("jsr303")
+	public String jsr303(@Valid User user, BindingResult result) {
+		
+		if(result.hasErrors())
+			logger.debug("hasErrors()");
+		else 
+			logger.debug("no error");
+		
+		return "mvc/view";
+	}
+	
+	@RequestMapping("throwException")
+	public String throwException() {
+		
+		int a = 10/0;
+		
+		return "mvc/view";
+	}
 	
 	
+	@RequestMapping("responseStatus")
+	public String responseStatus() throws NoFileException{
+		
+		// 인위적으로 존재하지 않는 파일에 접근하여
+		// IOException이 발생하도록 작성
+		// IOException을 catch하여 우리가 작성한 NoFileException으로 새롭게 예외 throw
+		// NoFileException에 설정한 @ResponseStatus에 의해
+		// 500상태코드가 아닌 404상태코드로 응답 생성
+		Resource resource = new ClassPathResource("kr/or/ddit/config/mybatis/mybatis-config-nofile.xml");
+		
+		logger.debug("responseStatus()");
+		
+		try {
+			resource.getInputStream();
+		} catch (IOException e) {
+			throw new NoFileException();
+		}
+		
+		return "mvc/view";
+	}
 	
+	@RequestMapping("error500")
+	public String error500() {
+		throw new NullPointerException();
+	}
 	
 	
 }

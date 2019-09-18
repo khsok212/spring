@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
+import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import kr.or.ddit.encrype.kisa.sha256.KISA_SHA256;
 // 0906 - implements HttpSessionBindingListener
 public class User implements HttpSessionBindingListener{
 	private String userNm;			//사용자 이름
+	
+	@NotNull
 	private String pass;			//사용자 비밀번호
 	private String userId;			//사용자 아이디
 	private String alias;  			//별명

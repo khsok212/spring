@@ -25,7 +25,7 @@
 		background: pink;
 	}
 </style>
-<%@ include file = "/WEB-INF/views/WEB-INF/views/WEB-INF/views/commonJsp/basicLib.jsp" %>
+<%@ include file = "/WEB-INF/views/commonJsp/basicLib.jsp" %>
 <script>
    // 문서 로딩이 완료된 후
    $(document).ready(function(){
@@ -68,7 +68,7 @@
     </form>
     
 	<!-- header -->
-	<%@ include file="/WEB-INF/views/WEB-INF/views/commonJsp/header.jsp"%>
+	<%@ include file="/WEB-INF/views/commonJsp/header.jsp"%>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -76,7 +76,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				
 				<!-- left -->
-				<%@ include file="/WEB-INF/views/WEB-INF/views/commonJsp/mainLeft.jsp"%>
+				<%@ include file="/WEB-INF/views/commonJsp/mainLeft.jsp"%>
 
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
