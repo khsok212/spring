@@ -30,7 +30,7 @@ $(document).ready(function(){
 </script>
 <body>
 	<!-- 가져간다  -->
-	<form id="frm" action="${cp}/userModify" method="get">
+	<form id="frm" action="${cp}/user/userModify" method="get">
        <input type="hidden" id="userId" name="userId" value = "${user.userId }"/>
     </form>
 
@@ -53,7 +53,7 @@ $(document).ready(function(){
                   <div class="col-sm-10">
                      <label class="control-label">
 				<%-- <img src = "${cp }${user.realfilename2 }"/></label> --%>
-					 <img src = "${cp }/userPicture?userId=${user.userId}"/></label>
+					 <img src = "${cp }/user/userPicture?userId=${user.userId}"/></label>
                   </div>
                </div>
       

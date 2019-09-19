@@ -4,6 +4,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     
 <!DOCTYPE html>
@@ -64,14 +66,14 @@ $(function(){
       
 			
             <form id = "frm" class="form-horizontal" role="form"
-            		action="${cp }/userModify" method="post"
+            		action="${cp }/user/userModify" method="post"
             		enctype="multipart/form-data">
             		
 	            <input type="hidden" id="filename" name="filename" value = "${user.filename }"/>
 	       		<input type="hidden" id="realfilename" name="realfilename" value = "${user.realfilename }"/>
 	       		
 	       		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="picture">사용자 사진&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<img src = "${cp }/userPicture?userId=${user.userId}"/></label><br><br><br>
+				<img src = "${cp }/user/userPicture?userId=${user.userId}"/></label><br><br><br>
 				            		
       			<div class="form-group">
                   <label for="picture" class="col-sm-2 control-label">사용자 사진</label>
@@ -85,7 +87,8 @@ $(function(){
                   <label for="userId" class="col-sm-2 control-label">사용자 아이디</label>
                   <div class="col-sm-10">
                      <input type="text" class="form-control" id="userId" name="userId"
-								placeholder="사용자 아이디" readonly value="${user.userId }">
+								placeholder="사용자 아이디" readonly value="${user.userId }"><br>
+					<font color="red"><form:errors path="user.userId"/></font>
                   </div>
                </div>
       
