@@ -128,7 +128,6 @@ public class UserControllerTest extends WebTestConfig{
 						.param("zipcode", "34940")
 						.param("pass", "pass"))
 				.andExpect(status().is(302));
-		
 	}
 	
 	
