@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import kr.or.ddit.encrype.kisa.sha256.KISA_SHA256;
 
 // 0906 - implements HttpSessionBindingListener
@@ -21,6 +24,7 @@ public class User implements HttpSessionBindingListener{
 	private String userId;			//사용자 아이디
 	private String alias;  			//별명
 
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date reg_dt;			//날짜
 	
