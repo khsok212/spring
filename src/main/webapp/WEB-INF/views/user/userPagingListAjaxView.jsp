@@ -62,14 +62,16 @@
       
       });
    });
- 
+ 	
+   
    // ajax 응답을 html로 받는다(html javascript로 생성하는 작업을 줄인다.)
    function getUserHtmlList(page, pagesize){
+	   
+	   // 파라미터 -> json
 	   $.ajax({
 		  url : "${cp}/user/userPagingListHtmlAjax",
 		  data : "page=" + page + "&pagesize=" + pagesize,
 		  success : function(data){
-			  console.l
 			  
  			var html = data.split("########################!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			  
@@ -78,86 +80,107 @@
 			  
 		  }
 	   })
-  } 
+   } 
    
-   
-   // ajax call을 통해 page, pagesize 하는 사용자
-   // 데이터를 가져온다
- function getUserList(page, pagesize){
-	   $.ajax({
-		  url : "${cp}/user/userPagingListAjax",
-		  data : "page=" + page + "&pagesize=" + pagesize,
-		  success : function(data){
-			  
-			  createUserListTbody(data.userList);
-// 			  페이지네이션 생성
-			  createPagination(data.pageVo, data.paginationSize);
-			  
-		  }
-	   })
-  }
-		 
- function createPagination(pageVo, paginationSize){
-	   var html = "";
-	   if(pageVo.page == 1){
-	      html += "<li>";
-	      html += "   <span aria-hidden='true'>&laquo;</span>";
-	      html += "</li>";
-	   }
-	   else {
-	      html += "<li>";
-	      html += "   <a href='javascript:getUserList(" + (pageVo.page-1) + ", " + pageVo.pagesize + ")' aria-label='Previous'>";
-	      html += "      <span aria-hidden='true'>&laquo;</span>";
-	      html += "   </a>";
-	      html += "</li>";
-	   }                     
+ 	// 9월 25일
+	function getUserListRequestBody(page, pagesize) {
+ 		
+ 		var param = {};
+ 		param.page = page;
+ 		param.pagesize = pagesize;
+ 		console.log("param : " + param);
+ 		
+		$.ajax({
+			url : "${cp}/user/userPagingListAjaxRequestBody",
+			contentType : "application/json",
+			dataType : "json",
+			method : "post",
+			data : JSON.stringify(param),
+			success : function(data) {
+				createUserListTbody(data.userList);					// userList html 생성
+				createPagination(data.pageVo, data.paginationSize); // 페이지네이션 생성
+			}
+		})
+	}
 
-	   for(var page = 1; page <= paginationSize; page++){
-	      if(page == pageVo.page){
-	         html += "<li class='active'><span>" + page + "</span></li>";
-	      }else {
-	         html += "<li>";
-	         html += "   <a href='javascript:getUserList(" + page + ", " + pageVo.pagesize + ")'>" + page + "</a>";
-	         html += "</li>";
-	      }
-	   }
-	   
-	   if(pageVo.page == paginationSize){
-	      html += "<li>";
-	      html += "   <span aria-hidden='true'>&raquo;</span>";
-	      html += "</li>";
-	   }
-	   else {
-	      html += "<li>";
-	      html += "   <a href='javascript:getUserList(" + (pageVo.page+1) + ", " + pageVo.pagesize + ")' aria-label='Next'>";
-	      html += "      <span aria-hidden='true'>&raquo;</span>";
-	      html += "   </a>";
-	      html += "</li>";
-	   }
-	   
-	   $(".pagination").html(html);
- }  
+ 	
+ 	
+	// ajax call을 통해 page, pagesize 하는 사용자
+	// 데이터를 가져온다
+	function getUserList(page, pagesize) {
+		$.ajax({
+			url : "${cp}/user/userPagingListAjax",
+			data : "page=" + page + "&pagesize=" + pagesize,
+			success : function(data) {
 
-   
-   
-  function createUserListTbody(userList){
-	// 사용자 데이터
+				createUserListTbody(data.userList);
+				// 			  페이지네이션 생성
+				createPagination(data.pageVo, data.paginationSize);
+
+			}
+		})
+	}
+
+	
+	
+	function createPagination(pageVo, paginationSize) {
+		var html = "";
+		if (pageVo.page == 1) {
+			html += "<li>";
+			html += "   <span aria-hidden='true'>&laquo;</span>";
+			html += "</li>";
+		} else {
+			html += "<li>";
+			html += "   <a href='javascript:getUserList(" + (pageVo.page - 1)
+					+ ", " + pageVo.pagesize + ")' aria-label='Previous'>";
+			html += "      <span aria-hidden='true'>&laquo;</span>";
+			html += "   </a>";
+			html += "</li>";
+		}
+
+		for (var page = 1; page <= paginationSize; page++) {
+			if (page == pageVo.page) {
+				html += "<li class='active'><span>" + page + "</span></li>";
+			} else {
+				html += "<li>";
+				html += "   <a href='javascript:getUserList(" + page + ", "
+						+ pageVo.pagesize + ")'>" + page + "</a>";
+				html += "</li>";
+			}
+		}
+
+		if (pageVo.page == paginationSize) {
+			html += "<li>";
+			html += "   <span aria-hidden='true'>&raquo;</span>";
+			html += "</li>";
+		} else {
+			html += "<li>";
+			html += "   <a href='javascript:getUserList(" + (pageVo.page + 1)
+					+ ", " + pageVo.pagesize + ")' aria-label='Next'>";
+			html += "      <span aria-hidden='true'>&raquo;</span>";
+			html += "   </a>";
+			html += "</li>";
+		}
+
+		$(".pagination").html(html);
+	}
+
+	function createUserListTbody(userList) {
+		// 사용자 데이터
 		// 기존 데이터 제거
 		$("#userListTbody").empty();
 		var html = "";
-		userList.forEach(function(user, idx){
+		userList.forEach(function(user, idx) {
 			html += "<tr>";
-			html += 	"<td>" + user.userId + "</td>";
-			html += 	"<td>" + user.userNm + "</td>";
-			html += 	"<td>" + user.alias + "</td>";
-			html += 	"<td>" + user.reg_dt + "</td>";
+			html += "<td>" + user.userId + "</td>";
+			html += "<td>" + user.userNm + "</td>";
+			html += "<td>" + user.alias + "</td>";
+			html += "<td>" + user.reg_dt + "</td>";
 			html += "</tr>";
 		})
 		// 완성된 userList데이터를 tbody영역에 추가
 		$("#userListTbody").html(html);
-   }
-   
-   
+	}
 </script>
 </head>
 

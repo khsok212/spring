@@ -14,10 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.common.model.Page;
@@ -299,27 +301,6 @@ public class UserController {
 	}
 	
 	
-	/**
-	 * 
-	* Method : userPagingListAjax
-	* 작성자 : 202-01
-	* 변경이력 :
-	* @param model
-	* @param page
-	* @return
-	* Method 설명 : ajax로 값 가져오기
-	 */
-	@RequestMapping(path = "userPagingListAjax", method = RequestMethod.GET)
-	public String userPagingListAjax(Model model, Page page) {				
-		
-		model.addAttribute("pageVo", page);
-		
-		Map<String, Object> resultMap = userService.getUserPagingList(page);
-		model.addAllAttributes(resultMap);
-		
-		return "jsonView";
-		
-	}
 	
 	/**
 	 * 
@@ -343,11 +324,43 @@ public class UserController {
 		return "user/userPagingListHtmlAjax";
 	}
 	
+	/**
+	 * 
+	 * Method : userPagingListAjax
+	 * 작성자 : 202-01
+	 * 변경이력 :
+	 * @param model
+	 * @param page
+	 * @return
+	 * Method 설명 : ajax로 값 가져오기
+	 */
+	@RequestMapping(path = "userPagingListAjax", method = RequestMethod.GET)
+	public String userPagingListAjax(Model model, Page page) {				
+		
+		model.addAttribute("pageVo", page);
+		
+		Map<String, Object> resultMap = userService.getUserPagingList(page);
+		model.addAllAttributes(resultMap);
+		
+		return "jsonView";
+		
+	}
 	
-	
-	
-	
-	
+	// 9월 25일
+	@RequestMapping(path = "userPagingListAjaxRequestBody", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> userPagingListAjaxRequestBody(Model model, @RequestBody Page page) {				
+		
+		Map<String, Object> resultMap = userService.getUserPagingList(page);
+		resultMap.put("pageVo", page);
+		
+//		model.addAllAttributes(resultMap);
+		
+		// { userList : {userId : "brown", alias : "곰"...}, {...}, {...}],
+		// paginationSize : 11}
+		return resultMap;
+		
+	}
 	
 	
 }
